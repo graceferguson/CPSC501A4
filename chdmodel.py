@@ -7,6 +7,8 @@ Original file is located at
     https://colab.research.google.com/drive/1rlBytz9HQwzKhdFOLTzONnq6XIX5quCI
 """
 
+#Grace Ferguson 30004869
+
 from __future__ import absolute_import, division, print_function, unicode_literals
 import functools
 
@@ -83,10 +85,20 @@ for feature, vocab in CATEGORIES.items():
 preprocessing_layer = tf.keras.layers.DenseFeatures(categorical_columns+numeric_columns)
 
 model = tf.keras.Sequential([
-  preprocessing_layer,
-  tf.keras.layers.Dense(128, activation='relu'),
-  tf.keras.layers.Dense(128, activation='relu'),
-  tf.keras.layers.Dense(1, activation='sigmoid'),
+    preprocessing_layer,
+    tf.keras.layers.Dense(512, kernel_regularizer=tf.keras.regularizers.l2(0.0001),
+                 activation='elu'),
+    tf.keras.layers.Dropout(0.5),
+    tf.keras.layers.Dense(512, kernel_regularizer=tf.keras.regularizers.l2(0.0001),
+                 activation='elu'),
+    tf.keras.layers.Dropout(0.5),
+    tf.keras.layers.Dense(512, kernel_regularizer=tf.keras.regularizers.l2(0.0001),
+                 activation='elu'),
+    tf.keras.layers.Dropout(0.5),
+    tf.keras.layers.Dense(512, kernel_regularizer=tf.keras.regularizers.l2(0.0001),
+                 activation='elu'),
+    tf.keras.layers.Dropout(0.5),
+    tf.keras.layers.Dense(1, activation='sigmoid')
 ])
 
 model.compile(
